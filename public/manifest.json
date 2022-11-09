@@ -17,7 +17,7 @@
   "content_scripts": [
       {
           "matches": ["<all_urls>"],
-          "js": ["js/vendor.js", "js/content_script.js"]
+          "js": ["js/vendor.js", "js/contents.js", "js/utils.js"]
       }
   ],
 
@@ -30,6 +30,6 @@
   ],
 
   "host_permissions": [
-    "<all_urls>"
+    "https://portal.dhw.ac.jp/uprx/up/pk/pky001/Pky00101.xhtml"
   ]
 }

@@ -9,7 +9,9 @@
         "noEmitOnError": true,
         "jsx": "react",
         "typeRoots": [ "node_modules/@types" ],
-        "rootDir": "src",
-        "baseUrl": "src",
+        "baseUrl": "./src",
+        "paths": {
+            "@/*": ["src/*"]
+          }
     }
 }

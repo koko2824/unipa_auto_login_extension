@@ -1,51 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { LOCAL_STORAGE_LOCATION } from "../utils";
 
-const Popup = () => {
-  const [count, setCount] = useState(0);
-  const [currentURL, setCurrentURL] = useState<string>();
+const getIsCheckFromLocalStorage = (): boolean => {
+  const defaultValue = true;
+  const json = localStorage.getItem(LOCAL_STORAGE_LOCATION);
+  if (json === null) return defaultValue;
+  const obj = JSON.parse(json);
+  return obj.isCheck;
+};
 
-  useEffect(() => {
-    chrome.action.setBadgeText({ text: count.toString() });
-  }, [count]);
+const Popup: FC = () => {
+  const [isCheck, setIsCheck] = useState<boolean>(getIsCheckFromLocalStorage());
 
-  useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      setCurrentURL(tabs[0].url);
-    });
-  }, []);
-
-  const changeBackground = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            color: "#555555",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
+  const handleCheck = (checked: boolean) => {
+    const setValue = !checked
+    setIsCheck(setValue);
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+      const activeTab: any = tabs[0];
+      chrome.tabs.sendMessage(activeTab.id, { isCheck: setValue });
     });
   };
 
+  const setToLocalStorage = (isCheck: boolean) => {
+    const setJson = JSON.stringify({ isCheck: isCheck });
+    localStorage.setItem(LOCAL_STORAGE_LOCATION, setJson);
+  };
+
+  useEffect(() => {
+    setToLocalStorage(isCheck);
+  }, [isCheck]);
+
   return (
-    <>
-      <ul style={{ minWidth: "700px" }}>
-        <li>Current URL: {currentURL}</li>
-        <li>Current Time: {new Date().toLocaleTimeString()}</li>
-      </ul>
-      <button
-        onClick={() => setCount(count + 1)}
-        style={{ marginRight: "5px" }}
-      >
-        count up
-      </button>
-      <button onClick={changeBackground}>change background</button>
-    </>
+    <div style={{ width: "200px" }}>
+      <input
+        type="checkbox"
+        checked={isCheck}
+        onChange={() => handleCheck(isCheck)}
+      />
+      <p>現在のBool値:{String(isCheck)}</p>
+    </div>
   );
 };
 
