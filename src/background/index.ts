@@ -1,6 +1,12 @@
-function polling() {
-  // console.log("polling");
-  setTimeout(polling, 1000 * 30);
-}
+import { UNIPA_DESKTOP_URL, UNIPA_MOBILEJ_URL } from "../utils";
 
-polling();
+chrome.commands.onCommand.addListener((command) => {
+  switch (command) {
+    case "access_to_desktop":
+      chrome.tabs.create({url: UNIPA_DESKTOP_URL, active: true})
+      break;
+    case "access_to_mobile":
+      chrome.tabs.create({url: UNIPA_MOBILEJ_URL, active: true})
+      break;
+  }
+});

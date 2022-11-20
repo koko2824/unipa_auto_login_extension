@@ -32,14 +32,14 @@ const Popup: FC = () => {
   }, [isCheck]);
 
   return (
-    <div style={{ width: "200px" }}>
-      <input
-        type="checkbox"
-        checked={isCheck}
-        onChange={() => handleCheck(isCheck)}
-      />
-      <p>現在のBool値:{String(isCheck)}</p>
-    </div>
+      <div style={{ width: "200px" }}>
+        <input
+          type="checkbox"
+          checked={isCheck}
+          onChange={() => handleCheck(isCheck)}
+        />
+        <p>現在のBool値:{String(isCheck)}</p>
+      </div>
   );
 };
 

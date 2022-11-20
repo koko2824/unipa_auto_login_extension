@@ -15,21 +15,36 @@
   },
 
   "content_scripts": [
-      {
-          "matches": ["<all_urls>"],
-          "js": ["js/vendor.js", "js/contents.js", "js/utils.js"]
-      }
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/vendor.js", "js/contents.js", "js/utils.js"]
+    }
   ],
 
   "background": {
     "service_worker": "js/background.js"
   },
 
-  "permissions": [
-    "storage"
-  ],
+  "permissions": ["storage"],
 
   "host_permissions": [
     "https://portal.dhw.ac.jp/uprx/up/pk/pky001/Pky00101.xhtml"
-  ]
+  ],
+
+  "commands": {
+    "access_to_desktop": {
+      "suggested_key": {
+        "default": "Ctrl+U",
+        "mac": "Command+U"
+      },
+      "description": "access to Unipa for desktop"
+    },
+    "access_to_mobile": {
+      "suggested_key": {
+        "default": "Ctrl+M",
+        "mac": "Command+M"
+      },
+      "description": "access to Unipa for mobile"
+    }
+  }
 }
