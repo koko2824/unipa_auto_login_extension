@@ -1,4 +1,4 @@
-import { UNIPA_DESKTOP_URL, UNIPA_MOBILEJ_URL } from "../utils";
+import { UNIPA_DESKTOP_URL, UNIPA_MOBILE_URL } from "../utils";
 
 chrome.commands.onCommand.addListener((command) => {
   switch (command) {
@@ -6,7 +6,7 @@ chrome.commands.onCommand.addListener((command) => {
       chrome.tabs.create({url: UNIPA_DESKTOP_URL, active: true})
       break;
     case "access_to_mobile":
-      chrome.tabs.create({url: UNIPA_MOBILEJ_URL, active: true})
+      chrome.tabs.create({url: UNIPA_MOBILE_URL, active: true})
       break;
   }
 });
